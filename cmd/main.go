@@ -24,9 +24,17 @@ func main() {
 		log.Error("Please provide the date using the -d flag")
 		return
 	}
-	logger.LogWithFields(logrus.InfoLevel, "CLI Parameters", map[string]interface{}{
+	logger.LogWithFields(log, logrus.InfoLevel, "main", "CLI Parameters", map[string]interface{}{
 		"filename": *fileName,
 		"date":     *date,
 	})
-	//fmt.Println(cookie)
+	//cookie, err := handlers.GetMostActiveCookie(*fileName, *date)
+	//if err != nil {
+	//	log.WithFields(logrus.Fields{
+	//		"error": err,
+	//	}).Error("Error Getting Active Cookie")
+	//}
+	//log.WithFields(logrus.Fields{
+	//	"cookie": cookie,
+	//}).Info("Cookie Value")
 }
