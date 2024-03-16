@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/cli/internal/handlers"
 	"github.com/cli/internal/logger"
 	"github.com/sirupsen/logrus"
 )
@@ -28,13 +29,13 @@ func main() {
 		"filename": *fileName,
 		"date":     *date,
 	})
-	//cookie, err := handlers.GetMostActiveCookie(*fileName, *date)
-	//if err != nil {
-	//	log.WithFields(logrus.Fields{
-	//		"error": err,
-	//	}).Error("Error Getting Active Cookie")
-	//}
-	//log.WithFields(logrus.Fields{
-	//	"cookie": cookie,
-	//}).Info("Cookie Value")
+	cookie, err := handlers.GetMostActiveCookie(log, *fileName, *date)
+	if err != nil {
+		log.WithFields(logrus.Fields{
+			"error": err,
+		}).Error("Error Getting Active Cookie")
+	}
+	log.WithFields(logrus.Fields{
+		"cookie": cookie,
+	}).Info("Cookie Value")
 }
