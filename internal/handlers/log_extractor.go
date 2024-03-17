@@ -26,8 +26,8 @@ func GetMostActiveCookie(log *logrus.Logger, logFile string, specifiedDate strin
 
 	activeCookies := make(map[string]int)
 
-	targetDate, err := time.Parse(constants.InputDateLayout, specifiedDate)
-	fmt.Println("Target Date", targetDate)
+	targetDateChecker, err := time.Parse(constants.InputDateLayout, specifiedDate)
+	fmt.Println(targetDateChecker)
 	if err != nil {
 		return emptyStrings, err
 	}
@@ -36,7 +36,7 @@ func GetMostActiveCookie(log *logrus.Logger, logFile string, specifiedDate strin
 
 		log.WithFields(logrus.Fields{
 			"record": record[0],
-		}).Info("Record Value")
+		}).Debug("Record Value")
 		cookie := record[0]
 		timestamp, err := time.Parse(time.RFC3339, record[1])
 		if err != nil {
@@ -59,14 +59,15 @@ func GetMostActiveCookie(log *logrus.Logger, logFile string, specifiedDate strin
 
 	for cookie, count := range activeCookies {
 		if count > maxCount {
+			mostActiveCookie = nil
 			maxCount = count
-			mostActiveCookie = append(mostActiveCookie, cookie)
-		} else if count == maxCount {
+		}
+		if count == maxCount {
 			mostActiveCookie = append(mostActiveCookie, cookie)
 		}
 	}
 	log.WithFields(logrus.Fields{
 		"Most active cookies": mostActiveCookie,
-	}).Info("Record Value")
+	}).Debug("Record Value")
 	return mostActiveCookie, nil
 }
