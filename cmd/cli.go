@@ -1,34 +1,29 @@
 package main
 
 import (
-	"flag"
+	"fmt"
 	"github.com/cli/internal/handlers"
 	"github.com/cli/internal/logger"
 	"github.com/sirupsen/logrus"
+	"os"
 )
 
 func RunAsCli() {
 	log := logger.GetLogger()
-	fileName := flag.String("f", "", "The filename to read")
-	date := flag.String("d", "", "The date to be parsed")
-
-	flag.Parse()
-	// Check if a filename was provided with the -f flag
-	if *fileName == "" {
-		log.Error("Please provide a filename using the -f flag.")
+	if len(os.Args) < 2 {
+		fmt.Println("Please provide at least one argument.")
 		return
 	}
-	//readFile(*fileName)
-
-	if *date == "" {
-		log.Error("Please provide the date using the -d flag")
-		return
-	}
+	fileNames, dates := cliArgsSeparator(os.Args[1:])
 	logger.LogWithFields(log, logrus.InfoLevel, "main", "CLI Parameters", map[string]interface{}{
-		"filename": *fileName,
-		"date":     *date,
+		"filenames": fileNames,
+		"dates":     dates,
 	})
-	cookie, err := handlers.GetMostActiveCookie(log, *fileName, *date)
+	// TODO: Do we need parallel processing handling multiple files and dates?
+	if len(fileNames) > 1 || len(dates) > 1 {
+	}
+
+	cookie, err := handlers.GetMostActiveCookie(fileNames[0], dates[0])
 	if err != nil {
 		log.WithFields(logrus.Fields{
 			"error": err,
@@ -37,4 +32,23 @@ func RunAsCli() {
 	log.WithFields(logrus.Fields{
 		"cookie": cookie,
 	}).Info("Cookie Value")
+}
+
+// Adding the filename and dates to a slice since the future requirement might change into multiple filenames or dates
+func cliArgsSeparator(args []string) ([]string, []string) {
+	// Since the requirement doesn't have -f flag for filenames, removed its implementation
+	var fileNames, dates []string
+	foundDateFlag := false
+	for _, arg := range args {
+		if arg == "-d" {
+			foundDateFlag = true
+			continue
+		}
+		if !foundDateFlag {
+			fileNames = append(fileNames, arg)
+		} else {
+			dates = append(dates, arg)
+		}
+	}
+	return fileNames, dates
 }
