@@ -42,12 +42,12 @@ The project directory is organized as follows:
 **CLI Mode:**
 
 1. Set the `ENV` environment variable to `cli`.
-2. Run `go run cmd/main.go -f <csv_file_path> -d <date>`, replacing `<csv_file_path>` with the path to your CSV file and `<date>` with the date in YYYY-MM-DD format.
+2. Run `go run cmd/main.go cmd/cli.go cmd/server.go -f <csv_file_path> -d <date>`, replacing `<csv_file_path>` with the path to your CSV file and `<date>` with the date in YYYY-MM-DD format.
 
 **Server Mode:** [TODO]
 
 1. Set the `ENV` environment variable to `server`.
-2. Run `go run cmd/main.go`.
+2. Run `go run cmd/main.go cmd/cli.go cmd/server.go`.
 3. Send a GET request to `http://localhost:8080/most-active-cookie?date=<date>`, replacing `<date>` with the date in YYYY-MM-DD format. The response will contain the most active cookie for the specified date.
 
 **Dependencies**
