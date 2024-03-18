@@ -8,7 +8,6 @@ import (
 )
 
 func RunAsCli() {
-	logger.InitializeLogger()
 	log := logger.GetLogger()
 	fileName := flag.String("f", "", "The filename to read")
 	date := flag.String("d", "", "The date to be parsed")
