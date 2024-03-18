@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/csv"
-	"fmt"
 	"github.com/cli/internal/constants"
 	"github.com/cli/internal/logger"
 	"github.com/sirupsen/logrus"
@@ -29,10 +28,12 @@ func GetMostActiveCookie(logFile string, specifiedDate string) ([]string, error)
 	activeCookies := make(map[string]int)
 
 	targetDateChecker, err := time.Parse(constants.InputDateLayout, specifiedDate)
-	fmt.Println(targetDateChecker)
 	if err != nil {
 		return emptyStrings, err
 	}
+	log.WithFields(logrus.Fields{
+		"Target Date": targetDateChecker,
+	}).Debug("Date checker")
 
 	for _, record := range records[1:] { // skipping header
 
@@ -49,9 +50,6 @@ func GetMostActiveCookie(logFile string, specifiedDate string) ([]string, error)
 		}
 	}
 
-	log.WithFields(logrus.Fields{
-		"active cookies": activeCookies,
-	}).Info("Record Value")
 	if len(activeCookies) == 0 {
 		return emptyStrings, nil
 	}
