@@ -16,9 +16,9 @@ The project directory is organized as follows:
 .
 ├── README.md
 ├── cmd
-│         ├── cli.go
-│         ├── main.go
-│         └── server.go
+│   ├── cli.go
+│   ├── main.go
+│   └── server.go
 ├── cookie_log.csv
 ├── go.mod
 ├── go.sum
