@@ -14,22 +14,24 @@ all: install build
 install:
 	$(DEPCMD) ensure
 
-build: cli server
+build: cli
 
 cli:
-	$(GOBUILD) -o $(CLI_BINARY_NAME) cmd/main.go cmd/cli.go cmd/server.go
+	$(GOBUILD) -o $(CLI_BINARY_NAME) cmd/main.go cmd/cli.go
 
 
 run_cli: cli
 	@echo "Running CLI..."
 	@export LOG_MODE=CLI && ./$(CLI_BINARY_NAME) $(ARGS)
-#  make run_cli ARGS="-f cookie_log.csv -d 2018-12-09 "
-run_server: cli
-	@echo "Running Server..."
-	@export LOG_MODE=SERVER && ./$(CLI_BINARY_NAME) $(ARGS)
+#  make run_cli ARGS="cookie_log.csv -d 2018-12-09 "
+
+# Comenting the server impl as it is not needed rn
+#run_server: cli
+#	@echo "Running Server..."
+#	@export LOG_MODE=SERVER && ./$(CLI_BINARY_NAME) $(ARGS)
 
 test:
-	$(GOTEST) ./... -coverprofile=coverage.out
+	$(GOTEST) -v ./... -coverprofile=coverage.out
 
 coverage: test
 	$(GOCOVER) -html=coverage.out

@@ -4,12 +4,14 @@ import (
 	"encoding/csv"
 	"fmt"
 	"github.com/cli/internal/constants"
+	"github.com/cli/internal/logger"
 	"github.com/sirupsen/logrus"
 	"os"
 	"time"
 )
 
-func GetMostActiveCookie(log *logrus.Logger, logFile string, specifiedDate string) ([]string, error) {
+func GetMostActiveCookie(logFile string, specifiedDate string) ([]string, error) {
+	log := logger.GetLogger()
 	emptyStrings := make([]string, 0)
 
 	file, err := os.Open(logFile)
