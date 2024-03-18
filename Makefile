@@ -5,14 +5,14 @@ GOBUILD = $(GOCMD) build
 GOINSTALL = $(GOCMD) install
 GOCOVER = $(GOCMD) tool cover
 GOCLEAN = $(GOCMD) clean
-DEPCMD = dep
-CLI_BINARY_NAME = cli
+DEPCMD = $(GOCMD) mod download
+CLI_BINARY_NAME = most_active_cookie
 
 # Targets
 all: install build
 
 install:
-	$(DEPCMD) ensure
+	$(DEPCMD)
 
 build: cli
 
