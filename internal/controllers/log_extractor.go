@@ -15,7 +15,7 @@ func NewLogController(LogService services.LogService) *LogController {
 	return &LogController{logService: LogService}
 }
 
-// CURD controllers
+// CRUD controllers
 func (logController *LogController) GetLogData(ctx *gin.Context) {
 	fmt.Println("log")
 	//TODO: Get vars from the requests
