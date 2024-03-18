@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"bytes"
-	"github.com/sirupsen/logrus"
 	"os"
 	"reflect"
 	"testing"
@@ -60,9 +58,6 @@ SAZuXPGUrfbcn5UA,2018-12-09T10:13:00+00:00
 	if _, err := WrongTimeCsvFile.Write(WrongTimeCsvData); err != nil {
 		t.Fatalf("Failed to write data to temporary CSV file: %v", err)
 	}
-	// Mock logger
-	logger := logrus.New()
-	logger.SetOutput(bytes.NewBuffer(nil))
 
 	// Test cases
 	tests := []struct {
@@ -126,7 +121,7 @@ SAZuXPGUrfbcn5UA,2018-12-09T10:13:00+00:00
 	// Run tests
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			result, err := GetMostActiveCookie(logger, tc.logFile, tc.specifiedDate)
+			result, err := GetMostActiveCookie(tc.logFile, tc.specifiedDate)
 
 			if (err != nil) != tc.expectedError {
 				t.Fatalf("Expected error: %v, got: %v", tc.expectedError, err != nil)
