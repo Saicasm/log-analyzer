@@ -17,4 +17,4 @@ RUN cd cmd/ && CGO_ENABLED=0 GOOS=linux go build -o cli
 #EXPOSE 8080
 
 # Run
-CMD ["cmd/cli"]
+CMD ["cmd/cli","cookie_log.csv", "-d", "2018-12-09"]
