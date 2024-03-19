@@ -13,54 +13,53 @@ This project implements a command-line interface (CLI) program  that analyzes co
 
 The project directory is organized as follows:
 ```
-.
+├── Dockerfile 
+├── Makefile                    
 ├── README.md
-├── cmd
+├── cmd/
 │   ├── cli.go
 │   ├── main.go
 │   └── server.go
 ├── cookie_log.csv
+├── cookie_log1.csv
+├── directory_tree.md
 ├── go.mod
 ├── go.sum
-└── internal
-    ├── config
-    ├── constants
-    │         └── time.go
-    ├── controllers
-    ├── handlers
-    │         ├── log_extractor.go
-    │         └── log_extractor_test.go
-    ├── logger
-    │         └── logger.go
-    ├── models
-    ├── repositories
-    └── services
+├── internal/
+│   ├── config/
+│   ├── constants/
+│   │   ├── server.go               (Opt: Server related Constants)
+│   │   ├── time.go                 (Time related Constants)
+│   │   └── utils.go                (Other Utils)
+│   ├── controllers/
+│   │   ├── log_extractor.go        (Opt: Controller Layer for Server Impl)
+│   │   └── log_extractor_test.go
+│   ├── factories/
+│   │   └── log_extractor.go        (Opt:Factory for creating log controller and services for server Impl)
+│   ├── handlers/
+│   │   ├── log_extractor.go        (Business logic to extact most active cookie)
+│   │   └── log_extractor_test.go
+│   ├── logger/
+│   │   └── logger.go               (Project log config)
+│   ├── models/
+│   │   └── log.go                  (Opt: Model for log server impl)
+│   ├── repositories/
+│   ├── router/
+│   │   └── router.go               (Opt: router for server Impl)  
+│   └── services/
+│       ├── log_extractor.go        (Opt: Service layer for server Impl) 
+│       └── log_extractor_test.go
+├── sample.env
 ```
 
 **Running the Project**
 
-**CLI Mode:**
+**Using Makefile**
+1. Use `make install` to install the dependencies
+2. Use `make build` to build the `most_active_cookie` binary 
+3. Run `./most_active_cookie cookie_log.csv -d 2018-12-09` to directly run
+3. Opt: Use `make run_cli ARGS="<csv_file_path> -d <date>`, replacing `<csv_file_path>` with the path to your CSV file and `<date>` with the date in YYYY-MM-DD format.
 
-1. Set the `ENV` environment variable to `cli`.
-2. Run `go run cmd/main.go cmd/cli.go cmd/server.go -f <csv_file_path> -d <date>`, replacing `<csv_file_path>` with the path to your CSV file and `<date>` with the date in YYYY-MM-DD format.
-
-**Server Mode:** [TODO]
-
-1. Set the `ENV` environment variable to `server`.
-2. Run `go run cmd/main.go cmd/cli.go cmd/server.go`.
-3. Send a GET request to `http://localhost:8080/most-active-cookie?date=<date>`, replacing `<date>` with the date in YYYY-MM-DD format. The response will contain the most active cookie for the specified date.
-
-**Dependencies**
-
-This project uses the Go programming language and requires the following dependencies:
-
-* You can install them using the `go mod download` command.
-
-**Further Development**
-
-This project serves as a foundation for building a more comprehensive log analysis system. Potential areas for future development include:
-
-- [ ] Support for different log file formats
-- [ ] Advanced filtering capabilities
-- [ ] Run it as a server
-
+**Developing locally**
+1. Use `make install` to install the dependencies
+2. Execute `go run cmd/main.go cmd/cli.go cookie_log.csv -d 2018-12-09` to run the project without building

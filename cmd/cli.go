@@ -15,7 +15,7 @@ func RunAsCli() {
 		return
 	}
 	fileNames, dates := cliArgsSeparator(os.Args[1:])
-	logger.LogWithFields(log, logrus.InfoLevel, "main", "CLI Parameters", map[string]interface{}{
+	logger.LogWithFields(log, logrus.DebugLevel, "main", "CLI Parameters", map[string]interface{}{
 		"filenames": fileNames,
 		"dates":     dates,
 	})
@@ -23,15 +23,23 @@ func RunAsCli() {
 	if len(fileNames) > 1 || len(dates) > 1 {
 	}
 
-	cookie, err := handlers.GetMostActiveCookie(fileNames[0], dates[0])
+	cookies, err := handlers.GetMostActiveCookie(fileNames[0], dates[0])
 	if err != nil {
 		log.WithFields(logrus.Fields{
 			"error": err,
 		}).Error("Error Getting Active Cookie")
 	}
 	log.WithFields(logrus.Fields{
-		"cookie": cookie,
-	}).Info("Cookie Value")
+		"cookie": cookies,
+	}).Debug("Cookie Value")
+	if len(cookies) > 1 {
+		for _, cookie := range cookies {
+			fmt.Println(cookie)
+		}
+
+	} else {
+		fmt.Println(cookies[0])
+	}
 }
 
 // Adding the filename and dates to a slice since the future requirement might change into multiple filenames or dates
