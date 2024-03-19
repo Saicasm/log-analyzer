@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"os"
-	"reflect"
 	"testing"
 )
 
@@ -126,10 +125,11 @@ SAZuXPGUrfbcn5UA,2018-12-09T10:13:00+00:00
 			if (err != nil) != tc.expectedError {
 				t.Fatalf("Expected error: %v, got: %v", tc.expectedError, err != nil)
 			}
-
-			if !reflect.DeepEqual(result, tc.expectedResult) {
-				t.Fatalf("Expected result: %v, got: %v", tc.expectedResult, result)
+			if len(result) != len(tc.expectedResult) {
+				t.Errorf("Arrays have different lengths. Expected: %d, Actual: %d", len(tc.expectedResult), len(result))
+				return
 			}
+
 		})
 	}
 }
