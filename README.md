@@ -2,13 +2,6 @@
 
 This project implements a command-line interface (CLI) program  that analyzes cookie logs in CSV format to identify the most active cookie for a specific date.
 
-**Key Features**
-
-- **Dual Mode:** The program can be run as a CLI tool or as a server, depending on the environment variable set.
-- **CSV Parsing:** Handles CSV files containing cookie data and timestamps.
-- **Date Filtering:** Filters entries to identify cookies used on a particular date.
-- **Most Active Cookie:** Determines the cookie that appears most frequently on the specified date.
-
 **Project Structure**
 
 The project directory is organized as follows:
@@ -63,3 +56,7 @@ The project directory is organized as follows:
 **Developing locally**
 1. Use `make install` to install the dependencies
 2. Execute `go run cmd/main.go cmd/cli.go cookie_log.csv -d 2018-12-09` to run the project without building
+
+**Run test**
+1. Use `make test` to run the testcases
+2. Use `make coverage` to check the coverage for the files
