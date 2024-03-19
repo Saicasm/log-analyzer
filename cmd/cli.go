@@ -11,7 +11,12 @@ import (
 func RunAsCli() {
 	log := logger.GetLogger()
 	if len(os.Args) < 2 {
-		fmt.Println("Please provide at least one argument.")
+		log.Error("Please provide at least one argument")
+		return
+	}
+
+	if len(os.Args) < 3 {
+		log.Error("Please provide the date argument using -d")
 		return
 	}
 	fileNames, dates := cliArgsSeparator(os.Args[1:])
@@ -37,7 +42,7 @@ func RunAsCli() {
 			fmt.Println(cookie)
 		}
 
-	} else {
+	} else if len(cookies) > 0 {
 		fmt.Println(cookies[0])
 	}
 }
