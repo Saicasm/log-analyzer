@@ -29,6 +29,9 @@ func GetMostActiveCookie(logFile string, specifiedDate string) ([]string, error)
 
 	targetDateChecker, err := time.Parse(constants.InputDateLayout, specifiedDate)
 	if err != nil {
+		log.WithFields(logrus.Fields{
+			"Error": err,
+		}).Error("Cannot Parse Date")
 		return emptyStrings, err
 	}
 	log.WithFields(logrus.Fields{
